@@ -1,9 +1,7 @@
 ---
 title: "mydata dataset - Data Exploration and Cleanup"
-author: "Melinda Higgins"
-date: "2025-02-04"
-output: 
-  html_document:
+format: 
+  html:
     toc: true
 ---
 
@@ -37,4 +35,5 @@ View(mydata)
 
 * []()
 * []()
+
 
