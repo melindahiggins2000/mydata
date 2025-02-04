@@ -3,6 +3,8 @@ title: "mydata dataset - Data Exploration and Cleanup"
 format: 
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -31,9 +33,34 @@ I will also be handing out a hard copy of these data so you can look at the data
 View(mydata)
 ```
 
+```{r echo=FALSE}
+library(DT)
+datatable(
+  mydata,
+  options = list(
+    pagelength = 21,
+    autowidth = TRUE
+  )
+)
+```
+
+
 ## Also take a look at the "codebook"
 
-* []()
-* []()
+Feel free to click on links below or right click and "SaveAs" to save the file on your computer.
+
+* [Codebook in DOC format](Mydata_Codebook.docx)
+* [Codebook in PDF format](Mydata_Codebook.pdf)
 
 
+## Open discussion on what you "see"
+
+There are 11-12 problems with this little dataset. Which ones do you see?
+
+1. How might we use code to FIND (discover) these problems?
+
+2. How might we use code to FIX (correct) these problems?
+
+## Code to find and fix these issues
+
+[link to be added later](https://melindahiggins2000.github.io/mydata/)

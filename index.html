@@ -67,6 +67,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+
+<script src="index_files/libs/datatables-binding-0.33/datatables.js"></script>
+
+<script src="index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+
+<script src="index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
 
 
 </head>
@@ -82,6 +102,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#load-data" id="toc-load-data" class="nav-link active" data-scroll-target="#load-data">Load Data</a></li>
   <li><a href="#take-a-look-at-the-dataset" id="toc-take-a-look-at-the-dataset" class="nav-link" data-scroll-target="#take-a-look-at-the-dataset">Take a look at the dataset</a></li>
   <li><a href="#also-take-a-look-at-the-codebook" id="toc-also-take-a-look-at-the-codebook" class="nav-link" data-scroll-target="#also-take-a-look-at-the-codebook">Also take a look at the “codebook”</a></li>
+  <li><a href="#open-discussion-on-what-you-see" id="toc-open-discussion-on-what-you-see" class="nav-link" data-scroll-target="#open-discussion-on-what-you-see">Open discussion on what you “see”</a></li>
+  <li><a href="#code-to-find-and-fix-these-issues" id="toc-code-to-find-and-fix-these-issues" class="nav-link" data-scroll-target="#code-to-find-and-fix-these-issues">Code to find and fix these issues</a></li>
   </ul>
 </nav>
 </div>
@@ -121,13 +143,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-32012c4d73460d51f286" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-32012c4d73460d51f286">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21"],[1,2,3,4,5,6,8,9,12,14,16,19,21,22,23,24,27,28,30,32,null],[45,50,35,44,32,48,50,51,46,35,36,40,99,52,24,35,51,43,36,44,null],[68,167,143,216,243,165,60,110,167,190,230,200,180,240,250,175,220,230,190,260,null],[145,166,135,201,223,145,132,108,158,200,210,195,185,220,240,174,221,98,180,109,null],[5.6,5.4,5.6,5.6,6,5.2,3.3,5.1,5.5,5.8,6.2,6.1,5.9,6.5,6.4,5.8,6.3,2.6,5.7,6.4,null],[9,2,2,2,2,2,2,3,2,1,1,1,3,2,2,2,2,2,1,3,null],["m","f",null,"m","m","f","m","f","F","Male","m","f","f","m","M","F","m","m","female","male",null],[1,2,null,1,1,2,1,2,2,1,1,2,2,1,1,2,1,1,2,1,null],[4,3,3,4,5,2,3,1,1,4,1,1,2,2,5,5,4,11,5,1,null],[null,4,4,2,3,5,null,4,1,44,1,4,5,2,5,9,1,4,1,2,4],[null,1,2,2,5,5,4,1,5,1,3,4,5,2,3,1,4,9,1,1,4],[4,40,3,1,2,1,3,3,5,1,null,4,2,4,2,4,2,null,null,null,null],[4,3,5,1,4,4,9,1,1,4,5,1,5,99,5,2,3,null,null,null,null],[5,2,2,9,1,5,2,4,2,5,2,5,4,5,3,4,3,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>SubjectID<\/th>\n      <th>Age<\/th>\n      <th>WeightPRE<\/th>\n      <th>WeightPOST<\/th>\n      <th>Height<\/th>\n      <th>SES<\/th>\n      <th>GenderSTR<\/th>\n      <th>GenderCoded<\/th>\n      <th>q1<\/th>\n      <th>q2<\/th>\n      <th>q3<\/th>\n      <th>q4<\/th>\n      <th>q5<\/th>\n      <th>q6<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pagelength":21,"autowidth":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,8,9,10,11,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"SubjectID","targets":1},{"name":"Age","targets":2},{"name":"WeightPRE","targets":3},{"name":"WeightPOST","targets":4},{"name":"Height","targets":5},{"name":"SES","targets":6},{"name":"GenderSTR","targets":7},{"name":"GenderCoded","targets":8},{"name":"q1","targets":9},{"name":"q2","targets":10},{"name":"q3","targets":11},{"name":"q4","targets":12},{"name":"q5","targets":13},{"name":"q6","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="also-take-a-look-at-the-codebook" class="level2">
 <h2 class="anchored" data-anchor-id="also-take-a-look-at-the-codebook">Also take a look at the “codebook”</h2>
+<p>Feel free to click on links below or right click and “SaveAs” to save the file on your computer.</p>
 <ul>
-<li><a href=""></a></li>
-<li><a href=""></a></li>
+<li><a href="Mydata_Codebook.docx">Codebook in DOC format</a></li>
+<li><a href="Mydata_Codebook.pdf">Codebook in PDF format</a></li>
 </ul>
+</section>
+<section id="open-discussion-on-what-you-see" class="level2">
+<h2 class="anchored" data-anchor-id="open-discussion-on-what-you-see">Open discussion on what you “see”</h2>
+<p>There are 11-12 problems with this little dataset. Which ones do you see?</p>
+<ol type="1">
+<li><p>How might we use code to FIND (discover) these problems?</p></li>
+<li><p>How might we use code to FIX (correct) these problems?</p></li>
+</ol>
+</section>
+<section id="code-to-find-and-fix-these-issues" class="level2">
+<h2 class="anchored" data-anchor-id="code-to-find-and-fix-these-issues">Code to find and fix these issues</h2>
+<p><a href="https://melindahiggins2000.github.io/mydata/">link to be added later</a></p>
 </section>
 
 </main>
