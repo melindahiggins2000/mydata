@@ -1,0 +1,38 @@
+---
+title: "mydata dataset - Data Exploration and Cleanup"
+author: "Melinda Higgins"
+date: "2025-02-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      error= TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+## Load Data
+
+Read in the CSV file using the `readr` package
+
+```{r}
+library(readr)
+mydata <- read_csv("mydata.csv")
+```
+
+## Take a look at the dataset
+
+Type `View(mydata)` at the prompt or run interactively from an R script or Rmarkdown document.
+
+I will also be handing out a hard copy of these data so you can look at the data, the values and any patterns that emerge.
+
+```{r eval=FALSE}
+View(mydata)
+```
+
+## Also take a look at the "codebook"
+
+* []()
+* []()
+
