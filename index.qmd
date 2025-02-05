@@ -63,4 +63,4 @@ There are 11-12 problems with this little dataset. Which ones do you see?
 
 ## Code to find and fix these issues
 
-[link to be added later](https://melindahiggins2000.github.io/mydata/)
+[Cleanup Code](mydata_cleanup.html)

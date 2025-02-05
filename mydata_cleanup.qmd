@@ -2,8 +2,8 @@
 title: "mydata dataset - Data Exploration and Cleanup"
 author: "Melinda Higgins"
 date: "2025-02-04"
-output: 
-  html_document:
+format: 
+  html:
     toc: true
 editor_options: 
   chunk_output_type: console
@@ -208,8 +208,8 @@ mydata %>%                      # start with mydata
 
 Look at the small weights at PRE. IDs #8 and #1 have weights of only 60 and 68 pounds? Could this be the wrong units - maybe these are weights in kilograms (kg*2.205 = lbs)?
 
-60 kilograms = 132.3 pounds
-68 kilograms = 149.9 pounds
+* 60 kilograms = 132.3 pounds
+* 68 kilograms = 149.9 pounds
 
 These weights in pounds seem more reasonable.
 
@@ -232,7 +232,7 @@ Sort by the largest differences (+ or -). Show the top 10 rows.
 
 Notice ID 32 has a PRE weight of 260 lbs but a post weight of 109 lbs - maybe the 109 should be 209?
 
-ID 28 also has an unusually large difference, 230 lbs at PRE but nly 98 lbs at POST - maybe this should be 198 lbs?
+ID 28 also has an unusually large difference, 230 lbs at PRE but only 98 lbs at POST - maybe this should be 198 lbs?
 
 ```{r}
 mydata %>%
@@ -311,5 +311,197 @@ ggplot(mydata,
     caption = "mydata hypothetical dataset",
     color = "Gender"
   )
+```
+
+## Code to fix issues
+
+As we make corrections and updates, let create a new dataset called `mydata_corrected`.
+
+Let's make the following edits:
+
+### 1. Set values of 9 and 99 to missing - using a "base R" code approach - but don't set Subject ID #9 to missing
+
+```{r}
+# make copy of original data
+# remove SubjectID column first
+mydata_corrected <- mydata %>%
+  select(-SubjectID)
+
+# set all values of 99 to NA missing
+mydata_corrected[mydata_corrected == 99] <- NA
+
+# set all values of 9 to NA missing
+mydata_corrected[mydata_corrected == 9] <- NA
+
+# add SubjectID back to dataset
+mydata_corrected$SubjectID <- mydata$SubjectID
+```
+
+Take a quick look at histogram of age again
+
+```{r}
+ggplot(mydata_corrected,
+       aes(x = Age)) +
+  geom_histogram(fill = "lightblue",
+                 color = "black") +
+  labs(title = "Histogram of Age - Corrected Dataset",
+       subtitle = "Look at Distribution and Outliers",
+       caption = "mydata hypothetical dataset") +
+  xlab("Age in Years")
+```
+
+Let's also make these edits using `mutate()` function from `dplyr`.
+
+### 2. Correct typos for q1-q6
+    - set value of 11 to 1
+    - set value of 40 and 44 to 4
+
+```{r}
+# create new corrected variable
+mydata_corrected <- mydata_corrected %>%
+  mutate(q1_fix = case_when(
+    (q1 == 11) ~ 1,
+    (q1 == 40) ~ 4,
+    (q1 == 44) ~ 4,
+    .default = q1
+  ))
+```
+
+We can speed this up a bit by using the `across()` function as well, see [https://www.r-bloggers.com/2023/10/a-couple-of-case_when-tricks/#google_vignette](https://www.r-bloggers.com/2023/10/a-couple-of-case_when-tricks/#google_vignette).
+
+```{r}
+# this corrects all q variables at once
+# but overwrites the original q items
+mydata_corrected <- mydata_corrected %>%
+  mutate(
+    across(starts_with("q"),
+           ~ case_when(
+             (. == 11) ~ 1,
+             (. == 40) ~ 4,
+             (. == 44) ~ 4,
+             .default = .)
+           )
+  )
+```
+
+### 3. For WeightPRE, convert the weights < 70 from kg to pounds (kg*2.205 = lbs)
+
+```{r}
+mydata_corrected <- mydata_corrected %>%
+  mutate(
+    WeightPRE_fix = case_when(
+      (WeightPRE < 70) ~ WeightPRE*2.205,
+      .default = WeightPRE
+    )
+  )
+```
+
+### 4. For ID #28 change 2.6 feet to 6.2 and for ID #8 set 3.3 feet to `NA_real_` to indicate missing for real numeric data.
+
+```{r}
+mydata_corrected <- mydata_corrected %>%
+  mutate(
+    Height_fix = case_when(
+      (SubjectID == 28) ~ 6.2,
+      (SubjectID == 8) ~ NA_real_,
+      .default = Height
+    )
+  )
+```
+
+### 5. For the 2 typos for WeightPOST - make these changes:
+
+* Change ID 32's POST weight from 109 lbs to 209 lbs
+* Change ID 28's POST weight from 98 lbs to 198 lbs
+
+```{r}
+mydata_corrected <- mydata_corrected %>%
+  mutate(
+    WeightPOST_fix = case_when(
+      (SubjectID == 32) ~ 209,
+      (SubjectID == 28) ~ 198,
+      .default = WeightPOST
+    )
+  )
+```
+
+### 6. Shift the values for `q2` and `q3` up by 1 row using the `lead()` function from `dplyr`. Let's see what the `lead()` and `lag()` function do.
+
+```{r}
+# see the order of values for q2
+mydata$q2
+
+# see shift using lag()
+dplyr::lag(mydata$q2, n=1)
+
+# see shift using lead()
+dplyr::lead(mydata$q2, n=1)
+```
+
+Correct `q2` and `q3`.
+
+```{r}
+mydata_corrected <- mydata_corrected %>%
+  mutate(q2_fix = lead(q2, n=1),
+         q3_fix = lead(q3, n=1))
+```
+
+### 7. Save the correct values
+
+```{r}
+mydata_final <- mydata_corrected %>%
+  filter(!is.na(SubjectID)) %>%
+  select(SubjectID,
+         Age,
+         SES,
+         Height_fix,
+         WeightPRE_fix,
+         WeightPOST_fix,
+         GenderCoded.f,
+         q1_fix,
+         q2_fix,
+         q3_fix,
+         q4,
+         q5,
+         q6)
+```
+
+### 8. We could also write this data out to be read in later - save this in the raw binary format `*.RData`.
+
+```{r}
+save(mydata_final,
+     file = "mydata_final.RData")
+```
+
+We can clean up our Global Environment and then read back in this cleaned and corrected dataset.
+
+```{r}
+rm(list = ls())
+ls()
+```
+
+```{r}
+load(file = "mydata_final.RData")
+```
+
+### 9. Let's create BMI for PRE and POST
+
+So, let's compute BMI (body mass index) as follows from Height (in inches) and Weight (in pounds):
+
+$$BMI = \left(\frac{weight_{(lbs)}}{(height_{(inches)})^2}\right) * 703$$
+
+```{r}
+# Compute BMI for the PRE Weight
+mydata_final <- mydata_final %>%
+  mutate(
+    bmiPRE = (WeightPRE_fix * 703) / (Height_fix * 12)^2,
+    bmiPOST = (WeightPOST_fix * 703) / (Height_fix * 12)^2
+  )
+
+# look at histograms of BMI
+ggplot(mydata_final,
+       aes(x = bmiPRE)) +
+  geom_histogram(fill = "lightgreen",
+                 color = "black")
 ```
 
